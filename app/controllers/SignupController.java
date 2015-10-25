@@ -1,5 +1,6 @@
 package controllers;
 
+
 import is.rufan.user.domain.UserRegistration;
 import is.rufan.user.service.UserService;
 import play.mvc.*;

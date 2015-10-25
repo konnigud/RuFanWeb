@@ -23,15 +23,22 @@
             <li>
               <a href="TODO">Tournaments</a>
             </li>
-            <li>
-              <a href="TODO">Profile</a>
-            </li>
-            <li>
-              <a href="TODO">Wallet</a>
-            </li>
+            @if(session.get("manager")) {
+              <li>
+                <a href="@routes.LoginController.logout()">Manager</a>
+              </li>
+            } else {
+              <li>
+                <a href="TODO">Profile</a>
+              </li>
+              <li>
+                <a href="TODO">Wallet</a>
+              </li>
+            }
             <li>
               <a href="@routes.LoginController.logout()">Logout</a>
             </li>
+
           } else {
             <li class="@("active".when(nav == "signup"))">
               <a href="@routes.SignupController.blank()">Sign up</a>

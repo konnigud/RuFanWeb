@@ -43,6 +43,9 @@ public class LoginController extends UserController
 
     session("username", user.getUsername());
     session("displayName", user.getName());
+    if(user.isManager()) {
+      session("manager","manager");
+    }
 
     if (session().get("username") != null)
     {

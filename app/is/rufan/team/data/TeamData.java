@@ -65,7 +65,7 @@ public class TeamData extends RuData implements TeamDataGateway
 
   public List<Team> getTeams()
   {
-    String sql = "select * from teams";
+    String sql = "select * from teams order by displayname";
     JdbcTemplate queryPosition= new JdbcTemplate(getDataSource());
 
     List<Team> teams = queryPosition.query(sql,

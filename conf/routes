@@ -3,12 +3,18 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET        /signup                  controllers.SignupController.blank()
-POST       /signup                  controllers.SignupController.signup()
-GET        /login                   controllers.LoginController.blank()
-POST       /login                   controllers.LoginController.login()
-GET        /logout                  controllers.LoginController.logout()
+GET         /                        controllers.Application.index()
+GET         /signup                  controllers.SignupController.blank()
+POST        /signup                  controllers.SignupController.signup()
+GET         /login                   controllers.LoginController.blank()
+POST        /login                   controllers.LoginController.login()
+GET         /logout                  controllers.LoginController.logout()
+GET         /profile                 controllers.UserController.blankDetails()
+POST        /profile                 controllers.UserController.submit()
+GET         /users/:username         controllers.UserController.getUser(username: String)
+#GET         /userinfo                controllers.UserController.blankDetails()
+GET         /teams                   controllers.TeamController.getTeams()
+GET       /importPlayers           controllers.ManagerController.processplayers()
 
 
 # Map static resources from the /public folder to the /assets URL path

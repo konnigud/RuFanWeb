@@ -1,0 +1,121 @@
+
+@main(title = "MyProfile", nav = "details") {
+
+  <script type="text/javascript">
+    ( function($) {
+
+        $(document).ready( function() {
+      var xmlhttp = new XMLHttpRequest();
+      var username_input = document.getElementById("sessionUsername").value;
+      var url = "http://localhost:9000/users/" + username_input;
+
+      var xmlhttp2 = new XMLHttpRequest();
+      var url2 = "http://localhost:9000/teams";
+
+
+      var teams = [];
+      xmlhttp2.open('GET',url2,true);
+      xmlhttp2.send(null);
+      xmlhttp2.onreadystatechange = function() {
+        if (xmlhttp2.readyState == 4 && xmlhttp2.status == 200) {
+
+          var arr = JSON.parse(xmlhttp2.responseText);
+
+          var dropdown = document.getElementById("favteam");
+          for(var i = 0; i<arr.length; i++){
+              var option = document.createElement("option");
+              option.className = "team";
+              option.value = arr[i].displayName;
+              option.text = arr[i].displayName;
+              dropdown.add(option);
+          }
+        }
+      }
+
+      //alert(teams.length);
+      xmlhttp.open('GET',url,true);
+      xmlhttp.send(null);
+      xmlhttp.onreadystatechange = function() {
+        var id =  document.getElementById("id");
+        var name =  document.getElementById("name");
+        var username =  document.getElementById("username");
+        var email =  document.getElementById("email");
+        var password =  document.getElementById("password");
+        var favteam = document.getElementById("favteam");
+        var creditcard = document.getElementById("creditcard");
+        var manager = document.getElementById("manager");
+        if (xmlhttp.readyState == 4) {
+          if ( xmlhttp.status == 200) {
+            //alert(xmlhttp.responseText);
+            var det = eval( "(" +  xmlhttp.responseText + ")");
+            id.innerHTML = det.id;
+            name = det.name;
+            username = det.username;
+            email = det.email;
+            password = det.password;
+            favteam = det.favteam;
+            creditcard = det.creditcard;
+            manager = det.manager;
+
+            $("#name").val(name);
+            $("#username").val(username);
+            $("#email").val(email);
+            $("#password").val(password);
+            $("#creditcard").val(creditcard);
+
+            $(".team").prop("selected",false)
+                      .filter('[value='+favteam+']')
+                      .prop("selected",true);
+
+            if(manager == "1"){
+              $("#manager").prop("checked",true);
+            }
+            else {
+              $("#manager").prop("checked",false);
+            }
+
+          }
+          else{
+            alert("Error ->" + xmlhttp.responseText);
+          }
+        }
+      };
+    } )
+
+
+
+    } ) ( jQuery );
+    </script>
+
+
+  <input type="hidden" id="sessionUsername" value="@{session.get("username")}"/>
+
+  <h2>Account details:</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Favorite team</th>
+        <th>Credit card</th>
+        <th>Manager</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div id="id"></div></td>
+        <td><input type="text" id="name"></td>
+        <td><input type="text" id="username"></td>
+        <td><input type="text" id="email"></td>
+        <td><input type="password" id="password"></td>
+        <td><select id="favteam"></select></td>
+        <td><input type="text" id="creditcard"></td>
+        <td><input type="checkbox" id="manager"/></td>
+      </tr>
+    </tbody>
+  </table>
+}

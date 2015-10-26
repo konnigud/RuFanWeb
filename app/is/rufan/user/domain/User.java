@@ -8,6 +8,8 @@ public class User
   protected String email;
   protected String password;
   protected boolean manager;
+  protected String favteam;
+  protected String creditcard;
 
   public User()
   {
@@ -32,6 +34,16 @@ public class User
     this.manager = manager;
   }
 
+  public User(int id, String name, String username, String email, String password, boolean manager, String favteam, String creditcard) {
+    this.id = id;
+    this.name = name;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.manager = manager;
+    this.favteam = favteam;
+    this.creditcard = creditcard;
+  }
 
   public int getId()
   {
@@ -89,6 +101,22 @@ public class User
 
   public void setManager(boolean manager) {
     this.manager = manager;
+  }
+
+  public String getFavteam() {
+    return favteam;
+  }
+
+  public void setFavteam(String favteam) {
+    this.favteam = favteam;
+  }
+
+  public String getCreditcard() {
+    return creditcard;
+  }
+
+  public void setCreditcard(String creditcard) {
+    this.creditcard = creditcard;
   }
 
   @Override

@@ -59,8 +59,12 @@ public class SignupController extends UserController
     else
     {
       UserRegistration created = filledForm.get();
-      service.addUser(created);
+      int newid = service.addUser(created);
+
+      session("userid",Integer.toString(newid));
+
       return ok(summary.render(created));
     }
   }
+
 }

@@ -73,5 +73,14 @@ public class UserData extends RuData implements UserDataGateway
     }
   }
 
+  public User update(User user) {
 
+    String sql =  "UPDATE users " +
+                  "SET password = ? , email = ? , favteam = ? , creditcard = ?" +
+                  "WHERE id = ?";
+
+
+
+    return null;
+  }
 }

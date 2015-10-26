@@ -18,6 +18,8 @@ public class UserRowMapper implements RowMapper<User>
     user.setEmail(rs.getString("email"));
     user.setPassword(rs.getString("password"));
     user.setManager(rs.getBoolean("manager"));
+    user.setFavteam(rs.getString("favteam"));
+    user.setCreditcard(rs.getString("creditcard"));
     return user;
   }
 }

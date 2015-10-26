@@ -7,7 +7,7 @@
     <title>RuFan</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-    <script src="@routes.Assets.versioned("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   </head>
 
   <body>
@@ -28,8 +28,8 @@
                 <a href="@routes.LoginController.logout()">Manager</a>
               </li>
             } else {
-              <li>
-                <a href="TODO">Profile</a>
+              <li class="@("active".when(nav == "details"))">
+                <a href="@routes.UserController.blankDetails()">profile</a>
               </li>
               <li>
                 <a href="TODO">Wallet</a>

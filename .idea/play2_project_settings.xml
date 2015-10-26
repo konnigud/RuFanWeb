@@ -13,7 +13,7 @@
         <entry key="root">
           <value>
             <ProjectSettingsEntry>
-              <option name="confDir" value="C:\GitHub\RuFanWeb\RuFanWeb\app" />
+              <option name="sourceDir" value="C:\GitHub\RuFanWeb\RuFanWeb\app" />
               <option name="templateImports">
                 <list>
                   <option value="models._" />

@@ -33,4 +33,8 @@ public class UserServiceData implements UserService
   {
     return userDataGateway.find(username);
   }
+
+  public User updateUser(User user) {
+    return userDataGateway.update(user);
+  }
 }

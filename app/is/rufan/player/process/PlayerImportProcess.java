@@ -20,6 +20,9 @@ public class PlayerImportProcess extends RuAbstractProcess implements RuReadHand
   MessageSource msg;
   Logger logger = Logger.getLogger(this.getClass().getName());
 
+  public PlayerImportProcess() {
+  }
+
   @Override
   public void beforeProcess()
   {

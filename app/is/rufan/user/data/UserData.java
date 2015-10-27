@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,11 +78,30 @@ public class UserData extends RuData implements UserDataGateway
   public User update(User user) {
 
     String sql =  "UPDATE users " +
-                  "SET password = ? , email = ? , favteam = ? , creditcard = ?" +
+                  "SET password = ? , email = ? , favteam = ? , creditcard = ?, manager = ? " +
                   "WHERE id = ?";
 
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 
+    Object[] params = { user.getPassword(),
+                        user.getEmail(),
+                        user.getFavteam(),
+                        user.getCreditcard(),
+                        user.isManager(),
+                        user.getId()};
 
-    return null;
+    int[] types = { Types.VARCHAR,
+                    Types.VARCHAR,
+                    Types.VARCHAR,
+                    Types.VARCHAR,
+                    Types.VARCHAR,
+                    Types.INTEGER };
+
+    try{
+      jdbcTemplate.update(sql,params,types);
+      return user;
+    }catch(EmptyResultDataAccessException erdax){
+      return null;
+    }
   }
 }

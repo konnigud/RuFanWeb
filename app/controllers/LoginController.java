@@ -40,7 +40,6 @@ public class LoginController extends UserController
       filledForm.reject("password", "User not found or incorrect password entered.");
       return badRequest(login.render(filledForm));
     }
-
     session("username", user.getUsername());
     session("displayName", user.getName());
     if(user.isManager()) {

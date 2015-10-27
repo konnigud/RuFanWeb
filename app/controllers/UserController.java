@@ -1,15 +1,16 @@
 package controllers;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import is.rufan.user.service.UserService;
 import is.rufan.user.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import play.data.Form;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.details;
-import views.html.profile;
+
 
 
 import static play.data.Form.form;
@@ -21,7 +22,7 @@ public class UserController extends Controller
   protected ApplicationContext ctx = new FileSystemXmlApplicationContext("/conf/userapp.xml");
 
 
-  public Result blankprofile()
+  /*public Result blankprofile()
   {
     String username = session().get("username");
     UserService userService = (UserService)ctx.getBean("userService");
@@ -33,30 +34,58 @@ public class UserController extends Controller
     profileForm = profileForm.fill(user);
 
     return ok(profile.render(profileForm));
-  }
-
-  public Result submit()
+  }*/
+  @BodyParser.Of(BodyParser.Json.class)
+  public Result update()
   {
-    Form<User> profileForm = form(User.class);
-    Form<User> updatedForm = profileForm.bindFromRequest();
+    JsonNode json = request().body().asJson();
+    String username = session().get("username");
 
-    if (updatedForm.field("username").value().length () < 4)
-    {
-      updatedForm.reject("username", "Username must be at least 4 characters");
+
+    User updatedUser = new User();
+
+    updatedUser.setUsername(username);
+    updatedUser.setName(json.findPath("name").textValue());
+    updatedUser.setEmail(json.findPath("email").textValue());
+    updatedUser.setFavteam(json.findPath("favteam").textValue());
+    updatedUser.setPassword(json.findPath("password").textValue());
+    updatedUser.setCreditcard(json.findPath("creditcard").textValue());
+    updatedUser.setManager(json.findPath("manager").asBoolean());
+    //user.set
+
+    UserService userService = (UserService)ctx.getBean("userService");
+    User user = userService.getUserByUsername(username);
+
+    if(updatedUser.getFavteam() != null && updatedUser.getFavteam().isEmpty()){
+      updatedUser.setFavteam(user.getFavteam());
     }
 
-    if (updatedForm.hasErrors())
-    {
-      return badRequest(profile.render(updatedForm));
-    }
-    else
-    {
-      User user = updatedForm.get();
-      UserService service = (UserService) ctx.getBean("userService");
-      //service.updateUser(user);
+    if(updatedUser.getName() == user.getName() &&
+       updatedUser.getEmail() == user.getEmail() &&
+       updatedUser.getCreditcard() == user.getCreditcard() &&
+       updatedUser.getFavteam() == user.getFavteam() &&
+       updatedUser.getPassword() == user.getPassword() &&
+       updatedUser.isManager() == user.isManager()){
 
-      return ok(profile.render(updatedForm));
+      return ok("No changes");
     }
+    if(updatedUser.getCreditcard().length() != 0) {
+      if (updatedUser.getCreditcard().contains("[0-9]") == false &&
+              updatedUser.getCreditcard().length() != 16) {
+          return badRequest("Credit card number is invalid!!!");
+      }
+    }
+
+    updatedUser.setId(user.getId());
+
+    userService.updateUser(updatedUser);
+
+    session("displayName", user.getName());
+    if(user.isManager()) {
+      session("manager","manager");
+    }
+
+    return ok();
   }
 
   public Result getUser(String username)

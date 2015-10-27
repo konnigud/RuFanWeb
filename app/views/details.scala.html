@@ -2,9 +2,12 @@
 @main(title = "MyProfile", nav = "details") {
 
   <script type="text/javascript">
+
     ( function($) {
 
-        $(document).ready( function() {
+      $(document).ready(
+
+      function() {
       var xmlhttp = new XMLHttpRequest();
       var username_input = document.getElementById("sessionUsername").value;
       var url = "http://localhost:9000/users/" + username_input;
@@ -36,9 +39,9 @@
       xmlhttp.open('GET',url,true);
       xmlhttp.send(null);
       xmlhttp.onreadystatechange = function() {
-        var id =  document.getElementById("id");
+        //var id =  document.getElementById("id");
         var name =  document.getElementById("name");
-        var username =  document.getElementById("username");
+        //var username =  document.getElementById("username");
         var email =  document.getElementById("email");
         var password =  document.getElementById("password");
         var favteam = document.getElementById("favteam");
@@ -48,17 +51,18 @@
           if ( xmlhttp.status == 200) {
             //alert(xmlhttp.responseText);
             var det = eval( "(" +  xmlhttp.responseText + ")");
-            id.innerHTML = det.id;
+            //id.innerHTML = det.id;
             name = det.name;
-            username = det.username;
+            //username.innerHTML = det.username;
             email = det.email;
             password = det.password;
             favteam = det.favteam;
             creditcard = det.creditcard;
             manager = det.manager;
 
+            //&("#myProfile").find("#name").val(name);
             $("#name").val(name);
-            $("#username").val(username);
+            //$("#username").val(username);
             $("#email").val(email);
             $("#password").val(password);
             $("#creditcard").val(creditcard);
@@ -80,42 +84,79 @@
           }
         }
       };
+      $("#updateProfile").on("click",function(){
+
+        var updatedUser = new Object();
+        updatedUser.name =  document.getElementById("name").value;
+        updatedUser.email =  document.getElementById("email").value;
+        updatedUser.password =  document.getElementById("password").value;
+
+        updatedUser.creditcard = document.getElementById("creditcard").value;
+        updatedUser.manager = document.getElementById("manager").checked;
+
+
+        updatedUser.favteam = document.getElementById("favteam").value;
+        if(updatedUser.favteam == "default"){
+          updatedUser.favteam = "";
+        }
+
+
+        var jsonData = JSON.parse(JSON.stringify(updatedUser));
+        //alert(JSON.stringify(jsonData));
+        $.ajax({
+          type : "POST",
+          contentType:"application/json; charset=utf-8",
+          dataType: "json",
+          data: JSON.stringify(updatedUser),
+          url : "@routes.UserController.update()",
+          success: function () {
+            alert("test");
+          }
+        });
+      });
     } )
-
-
-
     } ) ( jQuery );
     </script>
 
 
   <input type="hidden" id="sessionUsername" value="@{session.get("username")}"/>
 
-  <h2>Account details:</h2>
+  <h2>Profile details:</h2>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Password</th>
-        <th>Favorite team</th>
-        <th>Credit card</th>
-        <th>Manager</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><div id="id"></div></td>
-        <td><input type="text" id="name"></td>
-        <td><input type="text" id="username"></td>
-        <td><input type="text" id="email"></td>
-        <td><input type="password" id="password"></td>
-        <td><select id="favteam"></select></td>
-        <td><input type="text" id="creditcard"></td>
-        <td><input type="checkbox" id="manager"/></td>
-      </tr>
-    </tbody>
-  </table>
+  <form  id="myProfile" role="form" data-toggle="validator">
+    <div class="form-group">
+      <label for="name">Name:</label><br/>
+      <input type="text" id="name" required>
+      <div class="help-block with-errors"></div>
+      <label for="email">Email:</label><br/>
+      <input type="text" id="email" placeholder="someone@@this.com">
+      <div class="help-block with-errors"></div>
+      <label for="password">Password:</label><br/>
+      <input type="password" id="password" data-minlenght="6" required>
+      <span class="help-block">Minimum of 6 characters</span>
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="form-group">
+      <label for="favteam">Favorite team:</label><br/>
+      <select id="favteam">
+        <option value="default" disabled selected>Pick your favorite team</option>
+      </select>
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="form-group">
+      <label for="creditcard">Creditcard number:</label><br/>
+      <input type="text" id="creditcard" pattern="^[0-9]{16}$">
+      <span class="help-block">A valid credit card number, no dashes.</span>
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="form-group">
+      <label for="manager">Are you a manager?</label><br/>
+      <input type="checkbox" id="manager">
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" id="updateProfile">Update profile</button>
+    </div>
+  </form>
+
 }

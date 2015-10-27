@@ -12,6 +12,8 @@ public class Tournament {
     protected Date startDate;
     protected String winnerName;
     protected int winnerId;
+    protected Date endDate;
+    protected String leagueName;
 
     public Tournament() {
     }
@@ -64,6 +66,21 @@ public class Tournament {
         this.winnerId = winnerId;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getLeagueName() {
+        return leagueName;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
 }
 
 

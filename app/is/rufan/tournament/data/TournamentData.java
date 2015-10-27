@@ -19,13 +19,15 @@ public class TournamentData extends RuData implements TournamentDataGateway{
 
         SimpleJdbcInsert insertTournament =
                 new SimpleJdbcInsert(getDataSource())
-                        .withTableName("tournament")
+                        .withTableName("tournaments")
                         .usingGeneratedKeyColumns("id");
 
         Map<String,Object> param = new HashMap<String, Object>(6);
         param.put("name",tournament.getName());
         param.put("startdate",tournament.getStartDate());
+        param.put("enddate",tournament.getStartDate());
         param.put("status",tournament.getStatus().getValue());
+        param.put("leaguename",tournament.getName());
         param.put("winnerid",tournament.getWinnerId());
         param.put("winnername",tournament.getWinnerName());
 
@@ -43,7 +45,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public List<Tournament> getAllTournaments() {
-        String sql = "select * from tournament order by startdate desc";
+        String sql = "select * from tournaments order by startdate desc";
         JdbcTemplate query = new JdbcTemplate(getDataSource());
 
         List<Tournament> tournaments = query.query(sql,new TournamentRowMapper());
@@ -51,7 +53,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public List<Tournament> getAllActiveTournaments() {
-        String sql = "select * from tournament where status = 1 order by startdate desc";
+        String sql = "select * from tournaments where status = 1 order by startdate desc";
         JdbcTemplate query = new JdbcTemplate(getDataSource());
 
         try {
@@ -65,7 +67,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public List<Tournament> getAllOpenTournaments() {
-        String sql = "select * from tournament where status = 2 order by startdate desc";
+        String sql = "select * from tournaments where status = 2 order by startdate desc";
         JdbcTemplate query = new JdbcTemplate(getDataSource());
 
         try {
@@ -79,7 +81,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public Tournament getTournamentById(int i) {
-        String sql = "select * from tournament where id = ?";
+        String sql = "select * from tournaments where id = ?";
         JdbcTemplate query = new JdbcTemplate(getDataSource());
 
         try {
@@ -94,7 +96,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public List<Tournament> getAllTournamentByWinner(int winnerId) {
-        String sql = "select * from tournament where winnerid = ? order by startdate desc";
+        String sql = "select * from tournaments where winnerid = ? order by startdate desc";
         JdbcTemplate query = new JdbcTemplate(getDataSource());
 
         try {
@@ -108,7 +110,7 @@ public class TournamentData extends RuData implements TournamentDataGateway{
     }
 
     public int updateTournament(Tournament updatedTournament) {
-        String sql = "update tournament set name = ?, status = ?, startdate = ?, winnername = ?, winnerid = ? where id = ?";
+        String sql = "update tournaments set name = ?, status = ?, startdate = ?, winnername = ?, winnerid = ? where id = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 

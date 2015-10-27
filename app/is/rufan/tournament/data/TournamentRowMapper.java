@@ -18,8 +18,9 @@ public class TournamentRowMapper implements RowMapper<Tournament>{
         tournament.setId(rs.getInt("id"));
         tournament.setName(rs.getString("name"));
         tournament.setStartDate(rs.getDate("startdate"));
+        tournament.setEndDate(rs.getDate("enddate"));
         tournament.setStatus(Status.fromInt(rs.getInt("status")));
-
+        tournament.setLeagueName(rs.getString("leaguename"));
         tournament.setWinnerId(rs.getInt("winnerid"));
         tournament.setWinnerName(rs.getString("winnername"));
         return tournament;

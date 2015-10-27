@@ -23,6 +23,12 @@ public class TournamentController extends Controller {
         return ok(toJson(tournaments));
     }
 
+    public Result getAllTournaments(){
+        TournamentService service = (TournamentService)ctx.getBean("tournamentService");
+        List<Tournament> tournaments = service.getAllActiveTournaments();
+        return ok(toJson(tournaments));
+    }
+
     public Result blank()
     {
         return ok(tournament.render());

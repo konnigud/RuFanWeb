@@ -26,9 +26,54 @@
                     session.get("displayName")
                 }!</p>
                 <a href="@routes.TournamentController.blank()" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-search"></span>Active Tournaments</a>
+
+                <h2>Active Tournaments</h2>
+
+                <table class="table" id="activeTournaments">
+                    <thead>
+                        <tr>
+                            <th hidden>Tournament Id</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>League</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
             </div>
         }
     } else {
         <image class="img-responsive" src="@routes.Assets.versioned("/images/RuFan-FrontPageLogo.png")"/>
     }
+
+    <script>
+    ( function($) {
+
+      $(document).ready(
+
+        function () {
+
+          var url = "@routes.TournamentController.getActiveTournaments()";
+          $.getJSON(url,function(data){
+
+            $.each(data,function(i,t){
+              $("#activeTournaments > tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
+            })
+          })
+        }
+
+       )} ) ( jQuery );
+
+    </script>
 }

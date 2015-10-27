@@ -11,7 +11,13 @@
 
             $.each(data,function(i,t){
               $("#activeTournaments > tbody:last-child")
-              .append("<tr><td hidden>"+t.id+"</td><td><a href='#'>"+t.name+"</td><td>"+t.status+"</td><td>"+t.startDate+"</td></tr>")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
             })
           })
 
@@ -31,6 +37,8 @@
         <th>Name</th>
         <th>Status</th>
         <th>Start date</th>
+        <th>End date</th>
+        <th>League</th>
       </tr>
     </thead>
     <tbody>

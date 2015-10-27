@@ -15,6 +15,8 @@ GET         /users/:username         controllers.UserController.getUser(username
 #GET         /userinfo                controllers.UserController.blankDetails()
 GET         /teams                   controllers.TeamController.getTeams()
 GET       /importPlayers           controllers.ManagerController.processplayers()
+GET         /activeTournaments        controllers.TournamentController.getActiveTournaments()
+GET         /tournaments            controllers.TournamentController.blank()
 
 
 # Map static resources from the /public folder to the /assets URL path

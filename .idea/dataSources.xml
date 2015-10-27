@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="382156319">
+  <component name="DataSourceManagerImpl" format="xml" hash="3077769224">
     <data-source source="LOCAL" name="SQL Server - @hrnem.ru.is" uuid="714fd529-f6aa-4144-9c1e-ad39e4f34099">
+      <driver-ref>sqlserver.jtds</driver-ref>
+      <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:jtds:sqlserver://hrnem.ru.is:1433</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="SQL Server - @hrnem.ru.is [2]" uuid="e75c7845-4942-4c4a-b010-634efdd59baa">
       <driver-ref>sqlserver.jtds</driver-ref>
       <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:jtds:sqlserver://hrnem.ru.is:1433</jdbc-url>

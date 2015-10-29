@@ -25,7 +25,7 @@
                 <p>Good to see you again @{
                     session.get("displayName")
                 }!</p>
-                <a href="@routes.TournamentController.blank()" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-search"></span>Active Tournaments</a>
+                <a href="@routes.FantasyController.blank()" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-search"></span> My Team</a>
 
                 <h2>Active Tournaments</h2>
 
@@ -63,7 +63,7 @@
             $.each(data,function(i,t){
               $("#activeTournaments > tbody:last-child")
               .append("<tr><td hidden>"+
-              t.id+"</td><td><a href='#'>"+
+              t.id+"</td><td><a href="+"http://localhost:9000/create/"+t.id+">"+
               t.name+"</td><td>"+
               t.status+"</td><td>"+
               t.startDate+"</td><td>"+

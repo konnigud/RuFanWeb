@@ -5,6 +5,7 @@ import is.rufan.player.data.PlayerDataGateway;
 import is.rufan.player.data.PositionDataGateway;
 import is.rufan.player.domain.Country;
 import is.rufan.player.domain.Player;
+import is.rufan.player.domain.PlayerInfo;
 import is.rufan.player.domain.Position;
 import is.ruframework.data.RuDataAccessFactory;
 import is.ruframework.domain.RuException;
@@ -59,6 +60,10 @@ public class PlayerServiceData implements PlayerService
   public Position getPosition(int positionId)
   {
     return positionDataGateway.getPosition(positionId);
+  }
+
+  public List<PlayerInfo> getPlayersInfo() {
+    return playerDataGateway.getAllPlayers();
   }
 }
 

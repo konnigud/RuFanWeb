@@ -17,6 +17,15 @@ GET         /teams                   controllers.TeamController.getTeams()
 GET       /importPlayers           controllers.ManagerController.processplayers()
 GET         /activeTournaments        controllers.TournamentController.getActiveTournaments()
 GET         /tournaments            controllers.TournamentController.blank()
+GET         /MyfantasyTeam            controllers.FantasyController.getMyFantasyTeam()
+GET         /fantasyteam              controllers.FantasyController.blank()
+GET         /create/:tid              controllers.FantasyController.createblank(tid: String)
+GET         /tournaments/:id          controllers.TournamentController.getTournamentByTextId(id: Integer)
+GET         /playerInfos                  controllers.PlayerController.getAllPlayers()
+POST        /fantasyteam              controllers.FantasyController.createTeam()
+GET         /fantasyteam/:id          controllers.FantasyController.blankdetails(id: Integer)
+GET         /fantasyteamdetail/:id    controllers.FantasyController.getFantasyTeamDetails(id: Integer)
+GET         /fantasyteam/info/:id     controllers.FantasyController.getFantasyTeam(id: Integer)
 
 
 # Map static resources from the /public folder to the /assets URL path

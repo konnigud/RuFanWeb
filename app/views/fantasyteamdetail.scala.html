@@ -1,0 +1,65 @@
+@main(title = "TeamDetail", nav = "details") {
+
+  <h2 id="title"></h2>
+  <h3 id="tournamntName">test2</h3>
+  <h4 id="tournamentStatus">test3</h4>
+
+  <table class="table" id="teamdetail">
+    <thead>
+      <tr>
+        <th hidden>Player Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team</th>
+        <th>Nationality</th>
+        <th>Position</th>
+        <th>Fantasy Points</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+
+<script>
+    ( function($) {
+
+      $(document).ready(
+
+        function () {
+
+          var index = window.location.href.lastIndexOf("/");
+          var id = window.location.href.substring(index+1);
+          var urlteam = "http://localhost:9000/fantasyteam/info/"+id;
+          $.getJSON(urlteam,function(data){
+              $("#title").html(data.name);
+
+              var urltourn = "http://localhost:9000/tournaments/"+data.tournamentId;
+              $.getJSON(urltourn,function(data){
+                $("#tournamntName").html(data.name);
+                $("#tournamentStatus").html(data.status);
+          });
+          });
+
+           var urlplayers = "http://localhost:9000/fantasyteamdetail/"+id;
+          $.getJSON(urlplayers,function(data){
+
+            $.each(data,function(i,t){
+              $("#teamdetail > tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td>"+
+              t.firstName+"</td><td>"+
+              t.lastName+"</td><td>"+
+              t.team+"</td><td>"+
+              t.country+"</td><td>"+
+              t.position+"</td><td>"+
+              0+"</td></tr>")
+            })
+          })
+        }
+
+    )} ) ( jQuery );
+
+    </script>
+}

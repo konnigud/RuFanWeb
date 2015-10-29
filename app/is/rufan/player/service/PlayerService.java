@@ -1,6 +1,7 @@
 package is.rufan.player.service;
 
 import is.rufan.player.domain.Player;
+import is.rufan.player.domain.PlayerInfo;
 import is.rufan.player.domain.Position;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ public interface PlayerService
   List<Player> getPlayers(int teamId);
   List<Player> getPlayersByTeamAbbreviation(int leagueId, String teamAbbreviation);
   void addPlayer(Player player) throws PlayerServiceException;
-
+  List<PlayerInfo> getPlayersInfo();
   Collection<Position> getPositions();
   Position getPosition(int positionId);
 }

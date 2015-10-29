@@ -1,0 +1,40 @@
+@main(title = "MyTeams", nav = "") {
+
+  <h2>My Fantasy Teams</h2>
+
+  <table class="table" id="myTeams">
+    <thead>
+      <tr>
+        <th hidden>Team Id</th>
+        <th>Name</th>
+        <th>Tournament Id</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  <script>
+    ( function($) {
+
+      $(document).ready(
+
+        function () {
+
+          var url = "@routes.FantasyController.getMyFantasyTeam()";
+          $.getJSON(url,function(data){
+             $.each(data,function(i,p){
+              $("#myTeams > tbody:last-child")
+              .append("<tr><td hidden>"+
+              p.id+"</td><td><a href="+"http://localhost:9000/fantasyteam/"+p.id+">"+
+              p.name+"</td><td>"+
+              p.tournamentId+"</td></tr>")
+            })
+          })
+        }
+
+       )} ) ( jQuery );
+
+    </script>
+}

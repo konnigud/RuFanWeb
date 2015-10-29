@@ -1,0 +1,186 @@
+@main(title = "Create Team", nav = "") {
+
+  <h2>Create Your Team</h2>
+
+  <form id="crateTeam" role="form" data-toggle="valdator">
+    <div class="container">
+      <div class="row-fluid">
+        <div class="form-group">
+          <label for="teamname">Team name:</label><br/>
+          <input type="text" id="teamname" required>
+          <span class="help-block">A name is required</span>
+          <div class="help-block with-errors"></div>
+          <label for="tournamentname">Tournament name:</label><br/>
+          <input type="text" id="tournamentname" required readonly>
+          <div class="help-block with-errors"></div>
+          <input type="text" id="tournamentid" hidden readonly>
+        </div>
+        <div class="form-group" id="div-goalkeeper">
+          <label for="goalkeeper">Goalkeeper</label><br/>
+          <select id="goalkeeper" class="goalkeepers players">
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group" id="div-defenders"  >
+          <label for="defender1">Defender</label><br/>
+          <select id="defender1" class="defenders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="defender2">Defender</label><br/>
+          <select id="defender2"class="defenders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="defender3">Defender</label><br/>
+          <select id="defender3"class="defenders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="defender4">Defender</label><br/>
+          <select id="defender4"class="defenders players">
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group" id="div-midfielders">
+          <label for="midfielder1">Midfielder</label><br/>
+          <select id="midfielder1"class="midfielders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="midfielder2">Midfielder</label><br/>
+          <select id="midfielder2"class="midfielders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="midfielder3">Midfielder</label><br/>
+          <select id="midfielder3"class="midfielders players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="midfielder4">Midfielder</label><br/>
+          <select id="midfielder4"class="midfielders players">
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group" id="div-forwards">
+          <label for="forward1">Forward1</label><br/>
+          <select id="forward1"class="forwards players">
+          </select>
+          <div class="help-block with-errors"></div>
+          <label for="forward2">Forward2</label><br/>
+          <select id="forward2"class="forwards players">
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" id="entertournament">Enter Tournament</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <script id="playertemplate" type="text/x-jQuery-templ">
+    <div class="">
+      <label class="player"
+    </div>
+  </script>
+
+  <script>
+    var playerList = [];
+
+    ( function($) {
+
+      $(document).ready(
+        function(){
+          var url = "http://localhost:9000/tournaments/"+window.location.href.slice(-1);
+          $.getJSON(url,function(data){
+            $("#teamname").val(data.name);
+            $("#tournamentid").val(data.id);
+            console.log("test");
+          })
+
+          var urlplayers = "@routes.PlayerController.getAllPlayers()"
+
+          $.getJSON(urlplayers,function(data){
+             playerList = data;
+            $.each(data,function(i,p){
+              if(p.posid === 1){
+                $("#goalkeeper").append(
+                $("<option />").val(p.playerid).text(p.firstName + " " +p.lastName+ " "+p.teamShort+" "+p.countryShort)
+                )
+                }
+              if(p.posid == 2){
+                $(".forwards").append(
+                $("<option />").val(p.playerid).text(p.firstName + " " +p.lastName+ " "+p.teamShort+" "+p.countryShort)
+                )
+              }
+              if(p.posid == 3){
+                $(".midfielders").append(
+                $("<option />").val(p.playerid).text(p.firstName + " " +p.lastName+ " "+p.teamShort+" "+p.countryShort)
+                )
+              }
+              if(p.posid == 4){
+                $(".defenders").append(
+                $("<option />").val(p.playerid).text(p.firstName + " " +p.lastName+ " "+p.teamShort+" "+p.countryShort)
+                )
+              }
+            });
+          });
+
+          $("#entertournament").on("click",function(e){
+            e.preventDefault();
+            var fteam = new Object();
+            fteam.name = $("#tournamentname").val();
+            fteam.tournamentId = $("#tournamentid").val();
+
+            fteam.players = [];
+
+            fteam.players.push({pid:$("#goalkeeper").val(),pos:"Goalkeeper"});
+            fteam.players.push({pid:$("#defender1").val(),pos:"Defender"});
+            fteam.players.push({pid:$("#defender2").val(),pos:"Defender"});
+            fteam.players.push({pid:$("#defender3").val(),pos:"Defender"});
+            fteam.players.push({pid:$("#defender4").val(),pos:"Defender"});
+            fteam.players.push({pid:$("#midfielder1").val(),pos:"Midfielder"});
+            fteam.players.push({pid:$("#midfielder2").val(),pos:"Midfielder"});
+            fteam.players.push({pid:$("#midfielder3").val(),pos:"Midfielder"});
+            fteam.players.push({pid:$("#midfielder4").val(),pos:"Midfielder"});
+            fteam.players.push({pid:$("#forward1").val(),pos:"Forward"});
+            fteam.players.push({pid:$("#forward2").val(),pos:"Forward"});
+
+            var check = false;
+           for(var i = 0; i<fteam.players.length;i++){
+              for(var j = 0; j<fteam.players.length;j++){
+                if(i!=j){
+                  if(fteam.players[i] == fteam.players[j]){
+
+                    check = true;
+
+                  }
+                }
+              }
+           }
+
+            if(check == false){
+            var url = "@routes.FantasyController.createTeam()";
+
+           $.ajax({
+              type: "POST",
+              contentType:"application/json; charset=utf-8",
+              dataType: "json",
+              data: JSON.stringify(fteam),
+              url : url,
+              complete: function(responce){
+                //if(responce.readyState === 4 && responce.status === 200){
+                  window.location.href = "http://localhost:9000/fantasyteam";
+                //}
+              }
+           })
+           }
+           else{
+           alert("Player can not be selected twice!")
+           window.location.reload();
+           }
+
+           return false;
+
+          });
+        })
+       }) ( jQuery );
+  </script>
+}

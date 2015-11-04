@@ -1,0 +1,138 @@
+@main(title = "All tournaments", nav = "") {
+  <script>
+    ( function($) {
+
+      $(document).ready(
+
+        function () {
+
+          var url = "@routes.TournamentController.getAllTournaments()";
+          $.getJSON(url,function(data){
+
+            $.each(data,function(i,t){
+            alert(t.status);
+            if(t.status == "ACTIVE"){
+              $("#activeTournaments > tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
+              }
+              if(t.status == "CREATED"){
+              $("#createdTournaments> tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
+              }
+              if(t.status == "OPEN"){
+              $("#openTournaments > tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
+              }
+              if(t.status == "CLOSED"){
+              $("#closedTournaments > tbody:last-child")
+              .append("<tr><td hidden>"+
+              t.id+"</td><td><a href='#'>"+
+              t.name+"</td><td>"+
+              t.status+"</td><td>"+
+              t.startDate+"</td><td>"+
+              t.endDate+"</td><td>"+
+              t.leagueName+"</td></tr>")
+              }
+            })
+          })
+
+        }
+
+       )} ) ( jQuery );
+
+  </script>
+
+  <div id="closed">
+    <h2>Created Tournaments</h2>
+
+    <table class="table" id="createdTournaments">
+      <thead>
+        <tr>
+          <th hidden>Tournament Id</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>League</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+<div id="active">
+  <h2>Active Tournaments</h2>
+
+  <table class="table" id="activeTournaments">
+    <thead>
+      <tr>
+        <th hidden>Tournament Id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>League</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+  <div id="open">
+    <h2>Open Tournaments</h2>
+
+    <table class="table" id="openTournaments">
+      <thead>
+        <tr>
+          <th hidden>Tournament Id</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>League</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="closed">
+    <h2>Closed Tournaments</h2>
+
+    <table class="table" id="closedTournaments">
+      <thead>
+        <tr>
+          <th hidden>Tournament Id</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>League</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+}

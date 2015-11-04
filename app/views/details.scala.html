@@ -84,8 +84,8 @@
           }
         }
       };
-      $("#updateProfile").on("click",function(){
-
+      $("#updateProfile").on("click",function(e){
+        e.preventDefault();
         var updatedUser = new Object();
         updatedUser.name =  document.getElementById("name").value;
         updatedUser.email =  document.getElementById("email").value;
@@ -109,8 +109,8 @@
           dataType: "json",
           data: JSON.stringify(updatedUser),
           url : "@routes.UserController.update()",
-          success: function () {
-            alert("test");
+          complete: function (responce) {
+            window.location.href = "http://localhost:9000/profile";
           }
         });
       });

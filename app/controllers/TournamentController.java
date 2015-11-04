@@ -10,6 +10,7 @@ import static play.libs.Json.toJson;
 import java.util.List;
 
 import views.html.tournament;
+import views.html.tournamentsall;
 import views.html.createteam;
 
 /**
@@ -27,7 +28,7 @@ public class TournamentController extends Controller {
 
     public Result getAllTournaments(){
         TournamentService service = (TournamentService)ctx.getBean("tournamentService");
-        List<Tournament> tournaments = service.getAllActiveTournaments();
+        List<Tournament> tournaments = service.getAllTournaments();
         return ok(toJson(tournaments));
     }
 
@@ -43,5 +44,7 @@ public class TournamentController extends Controller {
     {
         return ok(tournament.render());
     }
+
+    public Result allTournamentsBlank() {return ok(tournamentsall.render());}
 
 }

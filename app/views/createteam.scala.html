@@ -90,7 +90,7 @@
         function(){
           var url = "http://localhost:9000/tournaments/"+window.location.href.slice(-1);
           $.getJSON(url,function(data){
-            $("#teamname").val(data.name);
+            $("#tournamentname").val(data.name);
             $("#tournamentid").val(data.id);
             console.log("test");
           })
@@ -126,7 +126,7 @@
           $("#entertournament").on("click",function(e){
             e.preventDefault();
             var fteam = new Object();
-            fteam.name = $("#tournamentname").val();
+            fteam.name = $("#teamname").val();
             fteam.tournamentId = $("#tournamentid").val();
 
             fteam.players = [];
@@ -143,12 +143,12 @@
             fteam.players.push({pid:$("#forward1").val(),pos:"Forward"});
             fteam.players.push({pid:$("#forward2").val(),pos:"Forward"});
 
-            var check = false;
+           var check = false;
            for(var i = 0; i<fteam.players.length;i++){
               for(var j = 0; j<fteam.players.length;j++){
                 if(i!=j){
-                  if(fteam.players[i] == fteam.players[j]){
-
+                  if(fteam.players[i].pid == fteam.players[j].pid){
+                    alert
                     check = true;
 
                   }

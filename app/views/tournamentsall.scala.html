@@ -10,11 +10,11 @@
           $.getJSON(url,function(data){
 
             $.each(data,function(i,t){
-            alert(t.status);
+            //alert(t.status);
             if(t.status == "ACTIVE"){
               $("#activeTournaments > tbody:last-child")
               .append("<tr><td hidden>"+
-              t.id+"</td><td><a href='#'>"+
+              t.id+"</td><td><a href="+"http://localhost:9000/tournaments/"+t.id+">"+
               t.name+"</td><td>"+
               t.status+"</td><td>"+
               t.startDate+"</td><td>"+
@@ -24,7 +24,7 @@
               if(t.status == "CREATED"){
               $("#createdTournaments> tbody:last-child")
               .append("<tr><td hidden>"+
-              t.id+"</td><td><a href='#'>"+
+              t.id+"</td><td><a href="+"http://localhost:9000/tournaments/"+t.id+">"+
               t.name+"</td><td>"+
               t.status+"</td><td>"+
               t.startDate+"</td><td>"+
@@ -34,7 +34,7 @@
               if(t.status == "OPEN"){
               $("#openTournaments > tbody:last-child")
               .append("<tr><td hidden>"+
-              t.id+"</td><td><a href='#'>"+
+              t.id+"</td><td><a href="+"http://localhost:9000/tournaments/"+t.id+">"+
               t.name+"</td><td>"+
               t.status+"</td><td>"+
               t.startDate+"</td><td>"+
@@ -44,7 +44,7 @@
               if(t.status == "CLOSED"){
               $("#closedTournaments > tbody:last-child")
               .append("<tr><td hidden>"+
-              t.id+"</td><td><a href='#'>"+
+              t.id+"</td><td><a href="+"http://localhost:9000/tournaments/"+t.id+">"+
               t.name+"</td><td>"+
               t.status+"</td><td>"+
               t.startDate+"</td><td>"+
